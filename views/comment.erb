@@ -1,0 +1,12 @@
+<div class="main">
+<div class="topicname">
+<div class="proflink">
+<img class="userpic" src="<%= @comment['image'] %>">
+<a href="/profiles/<%= @comment['user_id'] %>"><%= @comment['name'] %></a>
+</div>
+<div class="comment"><%= markdown(@comment['content']) %></div>
+</div>
+</div>
+
+
+<%= erb :sidebar %>

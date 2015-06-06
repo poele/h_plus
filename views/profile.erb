@@ -1,0 +1,36 @@
+<%= erb :sidebar %>
+
+<div class="main">
+
+
+	<div class="editprof">
+		<% if @user == @username["id"]%>
+		<a href="/editprofile/<%= @username["id"] %>">EDIT PROFILE</a>
+		<% end %>
+	</div>
+
+	<div style="float: left; margin: 0 20px 10px 0;">
+		<img class="avatar" src="<%= @username["image"] %>">
+	</div>
+
+	username: <h1><%= @username["name"] %></h1>
+
+	email: <br><%= @username["email"] %>
+
+	<br>
+	<br>
+
+	bio: 
+	<% if @username["bio"] %>
+	<p> 
+	<%= markdown(@username["bio"]) %>
+	</p>
+	<% end %>
+
+
+
+
+
+
+
+</div>

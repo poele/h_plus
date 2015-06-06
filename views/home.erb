@@ -1,0 +1,22 @@
+<%= erb :sidebar %>
+
+
+<div class="main">
+
+
+		<% @topics.each do |topic| %>
+			<div class="topics">
+			<div class="topicname">
+				<a class="toptitles" href="/topics/<%= topic['id'] %>"><%= topic['name'] %></a><br><br>
+				<span class="desc"><%= topic['descrip'] %></span>
+			</div>
+			</div>
+			<br>
+			<hr>
+			<br>
+
+		<% end %>
+
+</div>
+
+

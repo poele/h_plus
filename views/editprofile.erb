@@ -1,0 +1,54 @@
+<%= erb :sidebar %>
+
+<div class="main">
+<% if @user == @username['id'] %>
+
+
+<img class="avatar" src="<%= @username["image"] %>">
+<br>
+<br>
+<form action="/editprofile" method="POST">
+<label for="avatar">Profile picture. Max size is 250x250px.</label>
+<br>
+<br>
+<input type="text" class="avatar" name="avatar" value="<%= @username["image"] %>">
+<input type="submit" value="Submit">
+
+<br>
+<br>
+
+username: 
+
+<form action="/editprofile" method="POST">
+<br>
+<input type="text" class="user" name="name" value="<%= @username["name"] %>">
+<input type="submit" vale="Submit">
+
+<br>
+<br>
+email: 
+
+<form action="/editprofile" method="POST">
+<br>
+<input type="text" class="email" name="email" value="<%= @username["email"] %>">
+<input type="submit" value="Submit">
+
+<br>
+<br>
+bio:
+
+<form action="/editprofile" method="POST">
+<br>
+<textarea cols="40" rows="10" name="bio"><%= @username["bio"] %></textarea><br>
+<input type="submit" value="Submit">
+
+
+<% else %>
+
+<div class="error">
+	You must be logged in to edit your profile.
+</div>
+
+<% end %>
+
+</div>

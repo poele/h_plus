@@ -1,0 +1,256 @@
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+	color: white;
+	background-color: black;
+}
+
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+
+.header {
+	background-color: #222;
+	position: absolute;
+	left: 20px;
+	width: 300px;
+	height: 100px;
+	border-radius: 50px;
+	border-top: 2px solid gray;
+	border-bottom: 2px solid white;
+	padding: 30px;
+}
+
+.header a {
+	color: white;
+	text-decoration: none;
+}
+
+#topnavbutton {
+	position: relative;
+	width: 40px;
+	left: 90%;
+}
+
+.sidebar {
+	background-color: #222;
+	height: 400px;
+	width: 225px;
+	position: fixed;
+	top: 250px;
+	left: 25px;
+	border-radius: 50px;
+	border-bottom: 2px solid white;
+	border-top: 2px solid gray;
+}
+
+.login {
+	width: 200px;
+	position: relative;
+	top: 50px;
+	left: 15px;
+}
+
+.logged {
+	text-align: center;
+}
+
+.main {
+	position: relative;
+	width: 700px;
+	left: 450px;
+	top: 200px;
+	overflow: scroll;
+	padding: 100px;
+}
+
+.topics {
+	background-color: #666;
+	padding: 20px;
+	border-radius: 20px;
+}
+
+.popularity {
+	position: relative;
+	left: -70px;
+	top: 100px;
+	text-align: center;
+	width: 50px;
+	height: 50px;
+	color: white;
+}
+
+.upvote {
+	background-color: black;
+	color: white;
+	border: 0px;
+}
+
+.topicname {
+	background-color: rgba(256, 256, 256, 0.1);
+	padding: 20px;
+	border-radius: 20px;
+}
+
+.toptitles {
+	font-size: 3em;
+	text-decoration: none;
+}
+
+.toptitles:hover {
+	font-style: italic;
+}
+
+.toptitles:after {
+}
+
+.desc {
+	margin-left: 40px;
+	}
+
+hr {
+	width: 500px;
+	border: 0;
+  border-bottom: 1px dashed #888;
+  background: #555;
+}
+
+.permalink {
+	text-align: right;
+}
+
+.permalink a {
+	color: grey;
+	text-decoration: none;
+}
+
+.permalink a:hover {
+	font-style: italic;
+}
+
+.location {
+	color: gray;
+	font-size: 0.9em;
+}
+
+
+.proflink a {
+	color: grey;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.proflink a:hover {
+	color: white;
+}
+
+.userpic {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+}
+
+.avatar {
+	max-width: 250px;
+	max-height: 250px;
+}
+
+.editprof {
+	text-align: right;
+}
+
+.editprof a {
+	color: gray;
+	text-decoration: none;
+}
+
+.add {
+	background-color: #333;
+	color: white;
+	font-size: 2em;
+	text-align: center;
+	margin-top: 10px;
+	height: 40px;
+	width: 40px;
+	border-radius: 25px;
+}
+
+#subject {
+	text-align: center;
+	text-transform: uppercase;
+	font-style: italic;
+	width: 300px;
+	height: 30px;
+	background-color: #777;
+	border: 1px solid white;
+	border-radius: 20px;
+}
+
+.input {
+	padding: 10px;
+	background-color: #777;
+	border: 1px solid white;
+	border-radius: 20px;
+}
+
+.forms {
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 1s ease-in;
+}
+
+.forms-change {
+	position: relative;
+	left: 390px;
+	bottom: 0px;
+	visibility: visible;
+	opacity: 1;
+}
+
+.sub {
+	width: 100px;
+	color: white;
+	font-size: 2em;
+	background-color: #333;
+	position: relative;
+	right: -110px;
+	border: 0px;
+	border-radius: 30px;
+}
+
+.subject {
+	text-align: center;
+	text-transform: uppercase;
+	font-style: italic;
+}
+
+.comment {
+	position: relative;
+	top: 10px;
+	left: 50px;
+	width: 600px;
+}
+
+
+.content {
+	position: relative;
+	margin-top: 10%;
+	padding-bottom: 20%; 
+}
+
+.credits {
+	font-size: .9em;
+	height: 50px;
+	width: 200px;
+	padding: 20px;
+	position: absolute;
+	right: 20px;
+	text-align: center;
+	background-color: #222;
+	border-radius: 50px;
+	border-bottom: 2px solid white;
+	border-top: 2px solid gray;
+}
+

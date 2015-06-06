@@ -1,0 +1,56 @@
+<%= erb :sidebar %>
+
+<div class="main">
+
+		<div class="topicname">
+			<div class="proflink">
+				<h2 class="subject">
+					<a href="/posts/<%= @post['id'] %>"><%= @post['subject'] %></a>
+					</h2>
+				<hr>
+			<a href="/profiles/<%= @post['user_id'] %>">
+			<img class="userpic" src="<%= @post['image'] %>">
+			<%= @post['name'] %></a>
+			</div>
+			<div class="comment">
+			<%= markdown(@post['content']) %>
+			</div>
+		</div>
+		<br>
+
+		<% @comments.each do |comment| %>
+		<div class="topicname">
+				<div class="permalink"><span class="location"><%= comment['location'] %> |</span>
+					<a href="/comments/<%= comment['id'] %>">permalink</a>
+				</div>
+				<div class="proflink">
+					<a href="/profiles/<%= comment['user_id'] %>">
+					<img class="userpic" src="<%= comment['image'] %>">
+					<%= comment['name'] %></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="comment"><%= markdown(comment['content']) %></div>
+				</div>
+			</div>
+			<br>
+		<% end %>
+
+	<div class="add">+</div>
+	<div class="forms">
+	    <form action="/comments" id="info" method="POST">
+	    <input type="hidden" name="post" value="<%= @post["id"] %>">
+	    <input type="hidden" name="ip" value="<%= @ip %>">
+	    <input type="hidden" name="by" value="<%= current_user %>">
+	    <textarea rows="6" cols="45" class="input" name="message">comment here</textarea>
+	    <br><br>
+	    <input type="submit" class="sub" name="sub" value="- + -"/>
+	</div>
+</div>
+
+
+<script>
+	$(function() {
+    $(".add").click(function() {
+        $(".forms").toggleClass("forms-change");
+    });
+});
+</script>

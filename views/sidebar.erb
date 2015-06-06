@@ -1,0 +1,33 @@
+<div class="sidebar">
+	<div class="login">
+	  <% if logged_in? %>
+	 		<%= @updated %>
+	    <%= @error %>
+	    <br>
+	    <form method="POST" action="/logout" class="logged"><br>
+	    <input type="hidden" name="_method" value="DELETE">
+	    <input type="submit" value="Logout">
+	    </form>
+	    
+	  <% else %>
+	  	<%= @incorrect %>
+			<%= @success %>
+			<%= @notin %>
+			<%= @notpop %>
+			<br>
+			<form method="POST" action="/login" class="logged">
+			 <input type="text" name="name" placeholder="name"><br>
+			 <input type="password" name="password" placeholder="password"><br>
+			 <input type="submit" name="Login">
+			</form>
+
+
+
+
+
+			<br>
+			<a href="/signup">Sign up</a>
+	  <% end %>
+	 </div>
+	</div>
+</div>
