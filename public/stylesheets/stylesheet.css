@@ -1,9 +1,30 @@
+
+
+@-webkit-keyframes opacity-turner {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes opacity-turnt {
+  0%   { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@-webkit-keyframes opacity-turn-down-for-what {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+
 body {
 	margin:0;
 	padding:0;
 	height:100%;
 	color: white;
+	font-size: 0.9em;
 	background-color: black;
+	font-family: 'Coda', cursive;
 }
 
 #wrapper {
@@ -14,9 +35,11 @@ body {
 .header {
 	background-color: #222;
 	position: absolute;
+	font-size: 1.9em;
 	left: 20px;
+	top: 20px;
 	width: 300px;
-	height: 100px;
+	height: 150px;
 	border-radius: 50px;
 	border-top: 2px solid gray;
 	border-bottom: 2px solid white;
@@ -29,9 +52,71 @@ body {
 }
 
 #topnavbutton {
-	position: relative;
+	position: absolute;
 	width: 40px;
-	left: 90%;
+	height: 40px;
+	top: 90px;
+	left: 400px;
+	border: 1px solid white;
+	color: white;
+	background-color: #333;
+	border-radius: 20px;
+}
+
+.nav {
+	list-style-type: none;
+	position: absolute;
+	right: -950px;
+	top: 0px;
+	margin: 0;
+  padding: 0;
+}
+
+.rolls {
+	-webkit-animation: opacity-turner 6s;
+	-webkit-transition: all 2s ease-in-out;
+	-webkit-transform: translate(-1000px,0) rotate(360deg);
+	background-color: #222;
+
+}
+
+.before {
+	display: inline-block;
+	-webkit-animation: opacity-turnt 5s;
+	text-align: center;
+	font-size: 1.3em;
+	width: 100px;
+	height: 100px;
+	padding: 0px 20px 35px 20px;
+	margin: 20px 50px 10px 30px;
+	border-radius: 130px;
+	border-top: 2px solid gray;
+	border-bottom: 2px solid white;
+}
+
+.nav li a:hover {
+	font-style: italic;
+}
+
+.nav li a {
+	color: white;
+	opacity: 10%;
+	text-decoration: none;
+}
+
+.username {
+ position: relative;
+ top: 20px;
+}
+
+.username a {
+	text-decoration: none;
+	color: white;
+}
+
+.username a:hover {
+	color: gray;
+	font-style: italic;
 }
 
 .sidebar {
@@ -46,6 +131,13 @@ body {
 	border-top: 2px solid gray;
 }
 
+.message {
+	-webkit-animation: opacity-turn-down-for-what 3s;
+	text-align: center;
+	font-size: 0.8em;
+	opacity: 0;
+}
+
 .login {
 	width: 200px;
 	position: relative;
@@ -55,6 +147,17 @@ body {
 
 .logged {
 	text-align: center;
+}
+
+.signup {
+	color: #AAA;
+	text-decoration: none;
+	font-weight: bold;
+	margin-left: 40px;
+}
+
+.signup:hover {
+	color: white;
 }
 
 .main {
@@ -82,6 +185,23 @@ body {
 	color: white;
 }
 
+.count {
+	position: relative;
+	top: 5px;
+	left: 580px;
+}
+
+.sort {
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.sort:hover {
+	font-style: italic;
+	color: white;
+}
+
 .upvote {
 	background-color: black;
 	color: white;
@@ -94,6 +214,10 @@ body {
 	border-radius: 20px;
 }
 
+.topicname a {
+	color: #222;
+}
+
 .toptitles {
 	font-size: 3em;
 	text-decoration: none;
@@ -101,9 +225,6 @@ body {
 
 .toptitles:hover {
 	font-style: italic;
-}
-
-.toptitles:after {
 }
 
 .desc {
@@ -117,7 +238,23 @@ hr {
   background: #555;
 }
 
+.op:hover {
+	width: 200px;
+	background-color: #444;
+	border-radius: 50px;
+}
+
+.op:hover:after {
+	font:status-bar;
+	font-size: 0.7em;
+	content: " --- op";
+}
+
 .permalink {
+	float: left;
+	position: relative;
+	left: 590px;
+	top: 130px;
 	text-align: right;
 }
 
@@ -130,11 +267,45 @@ hr {
 	font-style: italic;
 }
 
+.delete {
+	float: left;
+	border: 1px solid #333;
+	color: gray;
+	background-color: #333;
+	border-radius: 10px;
+}
+
+.delete:hover {
+	color: white;
+}
+
+.edit {
+	width: 100px;
+	margin-bottom: 15px;
+}
+
+.edit a {
+	font-weight: bold;
+	color: gray;
+	background-color: #333;
+	text-decoration: none;
+	border: 1px solid #333;
+	border-radius: 25px;
+}
+
+.edit a:hover {
+	color: white;
+}
+
 .location {
 	color: gray;
 	font-size: 0.9em;
 }
 
+.proflink {
+	height: 125px;
+	padding: 10px;
+}
 
 .proflink a {
 	color: grey;
@@ -149,21 +320,48 @@ hr {
 .userpic {
 	width: 50px;
 	height: 50px;
+	margin-top: 0px;
+	margin-left: 0px;
 	border-radius: 50px;
 }
 
 .avatar {
 	max-width: 250px;
 	max-height: 250px;
+	border-radius: 150px;
+}
+
+.title {
+	width: 200px;
+	text-align: center;
+	position: relative;
+	left: 90px;
 }
 
 .editprof {
+	float: right;
 	text-align: right;
 }
 
 .editprof a {
 	color: gray;
 	text-decoration: none;
+}
+
+.editprof a:hover {
+	color: white;
+	font-style: italic;
+}
+
+.postedit {
+	width: 100px;
+	color: white;
+	font-size: 2em;
+	background-color: #333;
+	position: relative;
+	left: 140px;
+	border: 0px;
+	border-radius: 30px;
 }
 
 .add {
@@ -209,6 +407,14 @@ hr {
 	opacity: 1;
 }
 
+#collapse {
+	width: 500px;
+}
+
+#postcenter {
+	margin-left: 75px;
+}
+
 .sub {
 	width: 100px;
 	color: white;
@@ -231,6 +437,15 @@ hr {
 	top: 10px;
 	left: 50px;
 	width: 600px;
+	margin: 15px;
+}
+
+.opcomment {
+	position: relative;
+	top: 20px;
+	left: 50px;
+	width: 600px;
+	margin: 30px;
 }
 
 

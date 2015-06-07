@@ -1,0 +1,46 @@
+<%= erb :sidebar %>
+
+<div class="main">
+<% if @user == @post['user_id'] %>
+<div class="topicname">
+	<div class="proflink">
+		<h2 class="subject">
+			<a href="/posts/<%= @post['id'] %>"><%= @post['subject'] %></a>
+				</h2>
+		<hr>
+		<img class="userpic" src="<%= @username['image'] %>">
+		<a href="/profiles/<%= @post['user_id'] %>"><%= @username['name'] %></a>
+	</div>
+	<div id="postcenter">
+	<div class="comment"><form action="/editpost" method="POST">
+		<br>
+		<input type="hidden" name="id" value="<%= @post["id"] %>">
+		<input type="text" class="title" name="subject" value="<%= @post['subject'] %>">
+		<br>
+		<br>
+		<textarea cols="60" rows="5" name="content"><%= @post["content"] %></textarea>
+		<br>
+		<br>
+		<input type="submit" class="postedit" value="+"/>
+		</form>
+	</div>
+	</div>
+</div>
+
+
+
+
+
+
+</div>
+
+
+<% else %>
+
+<div class="error">
+	You must be logged in to edit this post.
+</div>
+
+<% end %>
+
+</div>

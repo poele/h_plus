@@ -31,6 +31,8 @@ module Transhumanity
   		markdown.render(text)
 		end
 
+		# MAIN PAGE
+
     get "/" do
     	# DO NOT FORGET TO PUT vvvvvv IN EVERY ROUTE WITH THE SIDEBAR
     	@user = session[:user_id]
@@ -42,6 +44,8 @@ module Transhumanity
     	@image = $db.exec_params("SELECT * FROM posts INNER JOIN users ON users.id = posts.user_id;")
     	erb :home, :layout => :layout
     end
+
+    # SIDEBAR
 
     post('/login') do
       name = params[:name]
@@ -65,6 +69,8 @@ module Transhumanity
       redirect '/'
     end
 
+    # USER SIGN UP SECTION
+
     get '/signup' do
  		  user_id = session[:user_id]
     	erb :signup
@@ -79,18 +85,29 @@ module Transhumanity
     	redirect "/"
     end
 
+    # POSTS SECTION (topics/:id just displays posts for that topic)
+
     get '/topics/:id' do
     	@id = params[:id]
     	@user = session[:user_id]
     	@posts = $db.exec_params("SELECT * FROM posts WHERE topic = $1 ORDER BY popularity DESC;", [params[:id]])
+    	@username = $db.exec_params("SELECT * FROM users JOIN posts ON posts.user_id = users.id WHERE posts.id = $1", [params[:id]])
     	erb :topic, :layout => :layout
     end
 
+    get '/topicsbycomments/:id' do
+    	@id = params[:id]
+    	@user = session[:user_id]
+    	@posts = $db.exec_params("SELECT posts.id, posts.subject, posts.content, posts.popularity, posts.user_id, posts.topic, count(*) FROM posts, comments WHERE posts.id = comments.post GROUP BY posts.id ORDER BY count DESC;")
+    	erb :mostcomments, :layout => :layout
+    end
+
+
     post '/posts' do
     	if logged_in?
-      	result = params["topic"]
+      	result = params[:topic]
       	$db.exec_params("INSERT INTO posts (subject, content, topic, user_id, created_at) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)", [params[:subject], params[:content], params[:topic], current_user])
-        redirect "/posts/#{result}"
+        redirect "/topics/#{result}"
       else 
       	flash[:notin] = "You must log in to post a topic."
         redirect "/"
@@ -117,10 +134,90 @@ module Transhumanity
     	erb :post, :layout => :layout
     end
 
+    post '/deletepost/:id' do
+    	@user = session[:user_id]
+    	@post = $db.exec_params("SELECT * FROM posts WHERE id = $1", [params[:id]]).first
+    	if @user == @post['user_id']
+    		delete = $db.exec_params("DELETE FROM posts WHERE id = $1", [params[:id]]).first
+    		redirect "/topics/#{@post['topic']}"
+    	else 
+    		flash[:error] = "You must be logged in to delete this post."
+    		redirect "/topics/#{@post['topic']}"
+    	end
+    end
+
+    get '/editpost/:id' do
+    	@user = session[:user_id]
+    	@post = $db.exec_params("SELECT * FROM posts WHERE id = $1", [params[:id]]).first
+    	@username = $db.exec_params("SELECT * FROM posts JOIN users ON users.id = posts.user_id WHERE posts.id = $1", [params[:id]]).first
+    	erb :editpost, :layout => :layout
+    end
+
+    post '/editpost' do
+    	@user = session[:user_id]
+    	@post = $db.exec_params("SELECT * FROM posts WHERE id = $1", [params[:id]]).first
+    	$db.exec_params("UPDATE posts SET subject = $1, content = $2 WHERE id = $3", [params[:subject], params[:content], params[:id]])
+    	    	binding.pry
+    	redirect "/posts/#{@post['id']}"
+    end
+
+    # COMMENT SECTION
+
+    get '/comments/:id' do
+    	@comment = $db.exec_params("SELECT * FROM comments JOIN users ON users.id = comments.user_id WHERE comments.id = $1", [params[:id]]).first
+    	erb :comment, :layout => :layout
+    end
+
+
+    post '/comments' do
+    	ip = request.ip
+    	url = "http://ipinfo.io/#{ip}/json"
+    	response = RestClient.get (url)
+    	json = JSON.parse(response.body)
+    	location = "#{json['city']}, #{json['region']}, #{json['country']}"
+    	if logged_in?
+      	result = params["post"]
+      	$db.exec_params("INSERT INTO comments (content, post, user_id, location, created_at) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)", [params[:message], params[:post], current_user, location])
+        redirect "/posts/#{result}"
+      else 
+      	flash[:notin] = "You must log in to post a comment."
+        redirect "/"
+      end
+    end
+
+    post '/deletecomment/:id' do
+    	@user = session[:user_id]
+    	@comment = $db.exec_params("SELECT * FROM comments WHERE id = $1", [params[:id]]).first
+    	if @user == @comment['user_id']
+    		delete = $db.exec_params("DELETE FROM comments WHERE id = $1", [params[:id]]).first
+    		redirect "/posts/#{@comment['post']}"
+    	else 
+    		flash[:error] = "You must be logged in to delete this comment."
+    		redirect "/posts/#{@comment['post']}"
+    	end
+    end
+
+    get '/editcomment/:id' do
+    	@user = session[:user_id]
+    	@comment = $db.exec_params("SELECT * FROM comments WHERE id = $1", [params[:id]]).first
+    	@username = $db.exec_params("SELECT * FROM comments JOIN users ON users.id = comments.user_id WHERE comments.id = $1", [params[:id]]).first
+    	erb :editcomment, :layout => :layout
+    end
+
+    post '/editcomment' do
+    	@user = session[:user_id]
+    	@comment = $db.exec_params("SELECT * FROM comments WHERE comments.id = $1", [params[:id]]).first
+    	$db.exec_params("UPDATE comments SET content = $1 WHERE id = $2", [params[:content], params[:id]])
+    	redirect "/posts/#{@comment['post']}"
+    end
+
+    # PROFILE SECTION
+
     get '/profiles/:id' do
     	@updated = flash[:updated]
     	@error = flash[:error]
     	@user = session[:user_id]
+    	@id = params[:id]
     	@username = $db.exec_params("SELECT * FROM users WHERE id = $1", [params[:id]]).first
     	erb :profile, :layout => :layout
     end
@@ -147,27 +244,21 @@ module Transhumanity
  			end
  		end
 
-    get '/comments/:id' do
-    	@comment = $db.exec_params("SELECT * FROM comments JOIN users ON users.id = comments.user_id WHERE comments.id = $1", [params[:id]]).first
-    	erb :comment, :layout => :layout
-    end
+ 		# nav bar sw$g
 
+ 		get '/userposts/:id' do
+ 			@user = session[:user_id]
+ 			@posts = $db.exec_params("SELECT * FROM posts WHERE user_id = $1", [params[:id]])
+ 			@username = $db.exec_params("SELECT * FROM posts JOIN users ON users.id = posts.user_id WHERE users.id = $1", [params[:id]]).first
+ 			erb :userposts, :layout => :layout
+ 		end
 
-    post '/comments' do
-    	ip = request.ip
-    	url = "http://ipinfo.io/#{ip}/json"
-    	response = RestClient.get (url)
-    	json = JSON.parse(response.body)
-    	location = "#{json['city']}, #{json['region']}, #{json['country']}"
-    	if logged_in?
-      	result = params["post"]
-      	$db.exec_params("INSERT INTO comments (content, post, user_id, location, created_at) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)", [params[:message], params[:post], current_user, location])
-        redirect "/posts/#{result}"
-      else 
-      	flash[:notin] = "You must log in to post a comment."
-        redirect "/"
-      end
-    end
+ 		get '/usercomments/:id' do
+ 			@user = session[:user_id]
+ 			@comments = $db.exec_params("SELECT * FROM comments WHERE user_id = $1", [params[:id]])
+ 			@username = $db.exec_params("SELECT * FROM comments JOIN users ON users.id = comments.user_id WHERE users.id = $1", [params[:id]]).first
+ 			erb :usercomments, :layout => :layout 
+ 		end
 
  	end
 

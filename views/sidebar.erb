@@ -1,8 +1,10 @@
 <div class="sidebar">
 	<div class="login">
 	  <% if logged_in? %>
+	  	<div class="message">
 	 		<%= @updated %>
 	    <%= @error %>
+	  	</div>
 	    <br>
 	    <form method="POST" action="/logout" class="logged"><br>
 	    <input type="hidden" name="_method" value="DELETE">
@@ -10,10 +12,12 @@
 	    </form>
 	    
 	  <% else %>
+	  	<div class="message">
 	  	<%= @incorrect %>
 			<%= @success %>
 			<%= @notin %>
 			<%= @notpop %>
+			</div>
 			<br>
 			<form method="POST" action="/login" class="logged">
 			 <input type="text" name="name" placeholder="name"><br>
@@ -26,7 +30,7 @@
 
 
 			<br>
-			<a href="/signup">Sign up</a>
+			<a class="signup" href="/signup">Sign up</a>
 	  <% end %>
 	 </div>
 	</div>

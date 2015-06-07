@@ -26,8 +26,8 @@ CREATE TABLE posts (
   content TEXT DEFAULT 'this post has no content',
   popularity INT DEFAULT 0,
   created_at TIMESTAMP NOT NULL,
-  topic INT NOT NULL REFERENCES topics(id),
-  user_id INT NOT NULL REFERENCES users(id)
+  topic INT NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 
@@ -35,8 +35,8 @@ CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   content TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL,
-  post INT NOT NULL REFERENCES posts(id),
-  user_id INT NOT NULL REFERENCES users(id),
+  post INT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   location VARCHAR
 );
 

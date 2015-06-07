@@ -5,15 +5,22 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
 	<link rel="stylesheet" href="../stylesheets/stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Coda&effect=anaglyph">
 	<script src="../scripts/jquery.js"></script>
 </head>
 <body>
 
 <div id="wrapper">
 	<div class="header">
-		<a href="/"><h1>TRANSHUMANITY</h1></a>
-		<button id="topnavbutton"></button>
+		<a href="/"><h1 class="font-effect-anaglyph">newFutures</h1></a>
 	</div>
+			<ul class="nav">
+			<li class="before"><br><br><a href="/profiles/<%= @user %>">profile</a></li>
+			<li class="before"><br><br><a href="/editprofile/<%= @user %>">edit profile</a></li>
+			<li class="before"><br><br><a href="/userposts/<%= @user %>">posts</a></li>
+			<li class="before"><br><br><a href="/usercomments/<%= @user %>">comments</a></li>
+		</ul>
+		<button id="topnavbutton">nav</button>
 
 		<%= yield %>
 
@@ -28,6 +35,12 @@
 
 		
 </div>
-<script src="../scripts/main.js"></script>	
+<script>
+	$(function() {
+    $("#topnavbutton").click(function() {
+        $(".before").toggleClass("rolls");
+    });
+});
+</script>	
 </body>
 </html>

@@ -1,0 +1,33 @@
+<%= erb :sidebar %>
+
+<div class="main">
+
+		<div class="username">
+			<h1><a href="/profiles/<%= @username['id'] %>"><%= @username['name'] %>'s</a> comment history: </h1>
+		</div>
+		<% @comments.each do |comment| %>
+		<div class="topicname">
+			<% if @user == comment['user_id'] %>
+				<div class="edit">
+					<form action="/deletecomment/<%= comment['id'] %>" method="POST"><input type="submit" class="delete" name="delete" value="x">
+					&nbsp;&mdash; <a class="edit" href="/editcomment/<%= comment['id'] %>">&nbsp;o&nbsp;</a>
+					</form>
+				</div>
+
+			<% end %>
+				<div class="permalink">
+					<span class="location"><%= comment['location'] %> |
+					<a href="/comments/<%= comment['id'] %>">link</a> | <a href="/posts/<%= comment['post'] %>">post</a></span>
+				</div>
+				
+				<div class="proflink">
+					<a href="/profiles/<%= comment['user_id'] %>">
+					<img class="userpic" src="<%= @username['image'] %>">
+					<%= comment['name'] %></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="comment"><%= markdown(comment['content']) %></div>
+				</div>
+			</div>
+			<br>
+		<% end %>
+</div>

@@ -2,6 +2,9 @@
 
 <div class="main">
 
+		<div class="username" id="userpost">
+			<h1><a href="/profiles/<%= @username['id'] %>"><%= @username['name'] %>'s</a> post history: </h1>
+		</div>
 		<% @posts.each do |post| %>
 		<div class="popularity">
 			<%= post['popularity'] %><br>
@@ -34,28 +37,3 @@
 
 
 		<% end %>
-
-	<div class="add">+</div>
-	<div class="forms">
-	    <form action="/posts" method="POST">
-	    <input type="hidden" name="topic" value="<%= @id %>">
-	    <input type="hidden" name="ip" value="<%= @ip %>">
-	    <input type="hidden" name="by" value="<%= current_user %>">
-	    <input type="text" id="subject" name="subject" placeholder="subject name" />
-	    <br><br>
-	    <textarea rows="6" cols="45" class="input" name="content" placeholder="post content"></textarea>
-	    <br><br>
-	    <input type="submit" class="sub" name="sub" value="- + -"/>
-	</div>
-</div>
-
-
-<script>
-	$(function() {
-    $(".add").click(function() {
-        $(".forms").toggleClass("forms-change");
-    });
-});
-</script>
-
-</div>
