@@ -163,6 +163,48 @@ body {
 	color: white;
 }
 
+.create {
+	background-color: #555;
+	text-align: center;
+	padding: 10px;
+	border-radius: 40px;
+}
+
+#name {
+
+	width: 300px;
+	padding: 5px;
+	border-radius: 10px;
+
+}
+
+#email {
+
+	width: 300px;
+	padding: 5px;
+	border-radius: 10px;
+
+}
+
+#password {
+
+	width: 200px;
+	padding: 5px;
+	border-radius: 10px;
+
+}
+
+#createuser {
+	width: 100px;
+	color: white;
+	font-size: 2em;
+	background-color: #333;
+	position: relative;
+	right: -5px;
+	border: 0px;
+	border-radius: 30px;
+}
+
 .main {
 	position: relative;
 	width: 700px;
