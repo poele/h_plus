@@ -1,6 +1,6 @@
 <%= erb :sidebar %>
 
-<div class="main" style="width: 500px;">
+<div class="main" id="collapse">
 	<% if @user == @comment['user_id'] %>
 	<div class="topicname">
 		<div class="proflink">
@@ -30,9 +30,11 @@
 
 	<% else %>
 
+<div class="prof">
 	<div class="error">
-		You must be logged in to edit this comment.
+		You must be logged in as <% if @username['id'] == @comment['user_id'] %><%= @username['name'] %><% end %> to edit this comment.
 	</div>
+</div>
 
 	<% end %>
 

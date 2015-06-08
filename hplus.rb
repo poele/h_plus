@@ -18,14 +18,18 @@ module Transhumanity
       use Rack::Flash
     end
 
+    # is true if someone is logged in
+
     def logged_in?
       current_user != nil
     end
 
+# uses sessions to store the current user
     def current_user
       session[:user_id]
     end
 
+# allows commenting in markdown
  		def markdown(text)
   		markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :hard_wrap => true, :space_after_headers => true )
   		markdown.render(text)
@@ -35,6 +39,9 @@ module Transhumanity
 
     get "/" do
     	# DO NOT FORGET TO PUT vvvvvv IN EVERY ROUTE WITH THE SIDEBAR
+    	# 
+    	# these will be the flash messages that show up after an error
+    	# or just need to notify the user
     	@user = session[:user_id]
     	@success = flash[:success]
     	@incorrect = flash[:incorrect]
@@ -47,6 +54,7 @@ module Transhumanity
 
     # SIDEBAR
 
+# logs a user in by storing their data in a session
     post('/login') do
       name = params[:name]
       password = params[:password]
@@ -64,6 +72,7 @@ module Transhumanity
       end
     end
 
+# logs a user out by deleting their session
     delete('/logout') do
       session[:user_id] = nil
       redirect '/'
@@ -71,11 +80,13 @@ module Transhumanity
 
     # USER SIGN UP SECTION
 
+# displays the sign up page
     get '/signup' do
  		  user_id = session[:user_id]
     	erb :signup
     end
 
+# allows users to create an account if the name isn't registered to someone else
     post '/signup' do
     	name = params[:name]
     	password = params[:password]
@@ -87,6 +98,8 @@ module Transhumanity
 
     # POSTS SECTION (topics/:id just displays posts for that topic)
 
+
+# ports page by posts from most popular to least
     get '/topics/:id' do
     	@id = params[:id]
     	@user = session[:user_id]
@@ -95,6 +108,8 @@ module Transhumanity
     	erb :topic, :layout => :layout
     end
 
+    # sorts page by posts from most comments to least
+
     get '/topicsbycomments/:id' do
     	@id = params[:id]
     	@user = session[:user_id]
@@ -102,7 +117,7 @@ module Transhumanity
     	erb :mostcomments, :layout => :layout
     end
 
-
+# allows logged in users to make posts
     post '/posts' do
     	if logged_in?
       	result = params[:topic]
@@ -113,6 +128,8 @@ module Transhumanity
         redirect "/"
       end
     end
+
+    # allows users to upvote posts
 
     post '/popularity' do
     	@user = session[:user_id]
@@ -126,6 +143,8 @@ module Transhumanity
     	end
     end
 
+    # shows the post and its comments
+
     get '/posts/:id' do
   
     	@user = session[:user_id]
@@ -133,6 +152,8 @@ module Transhumanity
     	@comments = $db.exec_params("SELECT * FROM users JOIN comments ON comments.user_id = users.id WHERE post = $1 ORDER BY comments.id ASC;", [params[:id]])
     	erb :post, :layout => :layout
     end
+
+# allows users to delete posts IF THEY ARE THE OP
 
     post '/deletepost/:id' do
     	@user = session[:user_id]
@@ -146,12 +167,15 @@ module Transhumanity
     	end
     end
 
+		# allows users to edit the post if they are the op
+
     get '/editpost/:id' do
     	@user = session[:user_id]
     	@post = $db.exec_params("SELECT * FROM posts WHERE id = $1", [params[:id]]).first
     	@username = $db.exec_params("SELECT * FROM posts JOIN users ON users.id = posts.user_id WHERE posts.id = $1", [params[:id]]).first
     	erb :editpost, :layout => :layout
     end
+
 
     post '/editpost' do
     	@user = session[:user_id]
@@ -168,7 +192,7 @@ module Transhumanity
     	erb :comment, :layout => :layout
     end
 
-
+# allows logged in users to post comments
     post '/comments' do
     	ip = request.ip
     	url = "http://ipinfo.io/#{ip}/json"
@@ -185,6 +209,8 @@ module Transhumanity
       end
     end
 
+    # allows users to delete comments IF THEY ARE LOGGED IN AS THE POSTER
+
     post '/deletecomment/:id' do
     	@user = session[:user_id]
     	@comment = $db.exec_params("SELECT * FROM comments WHERE id = $1", [params[:id]]).first
@@ -197,12 +223,16 @@ module Transhumanity
     	end
     end
 
+    # allows user to edit comment IF THEY ARE LOGGED IN AS THE POSTER
+
     get '/editcomment/:id' do
     	@user = session[:user_id]
     	@comment = $db.exec_params("SELECT * FROM comments WHERE id = $1", [params[:id]]).first
     	@username = $db.exec_params("SELECT * FROM comments JOIN users ON users.id = comments.user_id WHERE comments.id = $1", [params[:id]]).first
     	erb :editcomment, :layout => :layout
     end
+
+    # updates comment data in sql
 
     post '/editcomment' do
     	@user = session[:user_id]
@@ -213,6 +243,7 @@ module Transhumanity
 
     # PROFILE SECTION
 
+# shows individual profile
     get '/profiles/:id' do
     	@updated = flash[:updated]
     	@error = flash[:error]
@@ -222,12 +253,14 @@ module Transhumanity
     	erb :profile, :layout => :layout
     end
 
+# allows user to edit profile IF THEY ARE LOGGED IN AS THAT USER
     get '/editprofile/:id' do
     	@user = session[:user_id]
     	@username = $db.exec_params("SELECT * FROM users WHERE id = $1", [params[:id]]).first
     	erb :editprofile, :layout => :layout
  		end
 
+# updates profile data in sql
  		post '/editprofile' do
  			@user = session[:user_id]
  		
@@ -246,6 +279,7 @@ module Transhumanity
 
  		# nav bar sw$g
 
+# shows a user's posts. allows for editing if user is logged in as that user
  		get '/userposts/:id' do
  			@user = session[:user_id]
  			@posts = $db.exec_params("SELECT * FROM posts WHERE user_id = $1", [params[:id]])
@@ -253,6 +287,7 @@ module Transhumanity
  			erb :userposts, :layout => :layout
  		end
 
+# shows a users comments. allows for editing if user is logged in as that users
  		get '/usercomments/:id' do
  			@user = session[:user_id]
  			@comments = $db.exec_params("SELECT * FROM comments WHERE user_id = $1", [params[:id]])

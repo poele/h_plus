@@ -15,7 +15,7 @@
 			<div class="topics">
 			<% if @user == post['user_id'] %>
 					<form action="/deletepost/<%= post['id'] %>" method="POST">
-					<input type="submit" class="delete" name="delete" value="x">
+					<input type="submit" class="del" name="delete" value="x">
 					</form>
 			<% end %>
 				<div class="topicname">

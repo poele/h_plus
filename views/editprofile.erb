@@ -1,6 +1,7 @@
 <%= erb :sidebar %>
 
 <div class="main">
+<div class="prof">
 <% if @user == @username['id'] %>
 
 
@@ -42,12 +43,13 @@ bio:
 <textarea cols="40" rows="10" name="bio"><%= @username["bio"] %></textarea><br>
 <input type="submit" value="Submit">
 
+</div>
 
 <% else %>
 
-<div class="error">
-	You must be logged in to edit your profile.
-</div>
+	<div class="error">
+		You must be logged in as <%= @username['name'] %> to edit this profile.
+	</div>
 
 <% end %>
 
