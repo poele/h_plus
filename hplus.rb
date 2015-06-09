@@ -19,7 +19,7 @@ module Transhumanity
     end
 
     configure :development do
-      $db = PG.connect dbname: "hogwarts_crud", host: "localhost"
+      $db = PG.connect dbname: "transhumanity", host: "localhost"
     end
 
     configure :production do
