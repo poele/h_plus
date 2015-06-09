@@ -18,6 +18,20 @@ module Transhumanity
       use Rack::Flash
     end
 
+    configure :development do
+      $db = PG.connect dbname: "hogwarts_crud", host: "localhost"
+    end
+
+    configure :production do
+      require 'uri'
+      uri = URI.parse ENV["DATABASE_URL"]
+      $db = PG.connect dbname: uri.path[1..-1],
+                         host: uri.host,
+                         port: uri.port,
+                         user: uri.user,
+                     password: uri.password
+    end
+
     # is true if someone is logged in
 
     def logged_in?

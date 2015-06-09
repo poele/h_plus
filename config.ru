@@ -1,11 +1,8 @@
+require 'rubygems'
+require 'bundler'
+
 require_relative 'hplus'
-require 'pry'
-require 'sinatra/base'
-require 'sinatra/contrib'
-require 'rest-client'
-require 'httparty'
-require 'json'
-require 'redcarpet'
+Bundler.require(:default, ENV['RACK_ENV'] || 'development')
 
 use Rack::MethodOverride
 
