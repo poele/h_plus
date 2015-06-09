@@ -1,13 +1,3 @@
-require "sinatra/base"
-require "pry"
-require "rack-flash"
-require "rest-client"
-require 'httparty'
-require 'json'
-require 'redcarpet'
-
-require_relative "db/connection"
-
 module Transhumanity
   class Server < Sinatra::Base
 
