@@ -1,3 +1,5 @@
+require 'sinatra'
+
 module Transhumanity
   class Server < Sinatra::Base
 
