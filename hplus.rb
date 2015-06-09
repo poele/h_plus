@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'rack-flash3'
 
 module Transhumanity
   class Server < Sinatra::Base
