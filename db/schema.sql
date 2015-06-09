@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS transhumanity;
-CREATE DATABASE transhumanity;
-\c transhumanity
+
 
 
 CREATE TABLE users (

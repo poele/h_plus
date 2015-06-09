@@ -1,4 +1,3 @@
-\c transhumanity
 TRUNCATE TABLE users, topics, comments, posts;
 
 INSERT INTO users
