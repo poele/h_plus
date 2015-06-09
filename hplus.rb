@@ -4,13 +4,13 @@ module Transhumanity
   class Server < Sinatra::Base
 
     configure do
-      register Sinatra::Reloader
       set :sessions, true
       use Rack::Flash
     end
 
     configure :development do
-      $db = PG.connect dbname: "transhumanity", host: "localhost"
+        register Sinatra::Reloader
+        $db = PG.connect dbname: "transhumanity", host: "localhost"
     end
 
     configure :production do
