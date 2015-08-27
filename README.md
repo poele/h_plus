@@ -48,8 +48,8 @@
 
 # ERD
 
-[check it out now][https://trello-attachments.s3.amazonaws.com/5570291d22a7467681278fc1/774x952/cd52318395b13dd3b8aecf75d6e3a6be/ERD.png]
+[check it out now](https://trello-attachments.s3.amazonaws.com/5570291d22a7467681278fc1/774x952/cd52318395b13dd3b8aecf75d6e3a6be/ERD.png)
 
 # WIREFRAMES
 
-[i bet you thought i'd finish that fatboy slim reference huh][https://trello.com/c/2uN1HUhT/14-wireframes]
+[i bet you thought i'd finish that fatboy slim reference huh](https://trello.com/c/2uN1HUhT/14-wireframes)
